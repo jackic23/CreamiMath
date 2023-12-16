@@ -55,16 +55,25 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  double _totalFat = 0;
   double _totalCups = 0;
-  
+
+  double _fatHCream = 0.35;
   double _cupsHCream = 0;
+  double _fatHalfAndHalf = 0.1;
   double _cupsHalfAndHalf = 0;
-  double _cupsMilk = 0;
-  double _flavourFat = 0;
+  double _fatMilk = 0.02;
+  double _cupsMilk = 0.35;
+  double _fatFlavour = 0;
   double _cupsFlavour = 0;
 
   void updateTotal() {
     _totalCups = _cupsHCream + _cupsHalfAndHalf + _cupsMilk + _cupsFlavour;
+    _totalFat = (_fatHCream * _cupsHCream +
+        _fatHalfAndHalf * _cupsHalfAndHalf +
+        _fatMilk * _cupsMilk +
+        _fatFlavour * _cupsFlavour) * 100 /
+            (_cupsHCream + _cupsHalfAndHalf + _cupsMilk + _cupsFlavour);
   }
 
   @override
@@ -105,11 +114,28 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
+              'Total Fat (%)',
+            ),
+            Text(
+              _totalFat.roundToDouble().toString(),
+              style: TextStyle(
+                color: _totalFat >= 8 && _totalFat <= 14
+                    ? Colors.green : Colors.red,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,                
+              ),
+            ),
+            const Text(
               'Total Volume',
             ),
             Text(
               '$_totalCups',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: TextStyle(
+                color: _totalCups >= 2 && _totalCups <= 2.5
+                    ? Colors.green : Colors.red,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,            
+              ),
             ),
             const Text(
               'Heavy Cream (cups)',
@@ -175,18 +201,18 @@ class _MyHomePageState extends State<MyHomePage> {
               'Flavour Fat (%)',
             ),
             Text(
-             (_flavourFat * 100).round().toString(),
+              (_fatFlavour * 100).round().toString(),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Slider(
-              value: _flavourFat,
+              value: _fatFlavour,
               min: 0.0,
               max: 1.0,
               divisions: 100,
-              label: (_flavourFat * 100).round().toString(),
+              label: (_fatFlavour * 100).round().toString(),
               onChanged: (value) {
                 setState(() {
-                  _flavourFat = value;
+                  _fatFlavour = value;
                   updateTotal();
                 });
               },
