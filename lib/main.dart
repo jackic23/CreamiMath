@@ -167,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (value) {
                 setState(() {
                   _cupsMilk = value;
+                  updateTotal();
                 });
               },
             ),
@@ -186,6 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (value) {
                 setState(() {
                   _flavourFat = value;
+                  updateTotal();
                 });
               },
             ),
@@ -205,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (value) {
                 setState(() {
                   _cupsFlavour = value;
+                  updateTotal();
                 });
               },
             ),
